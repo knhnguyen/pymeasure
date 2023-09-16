@@ -117,6 +117,18 @@ class SPDChannel(Channel):
         dynamic=True
     )
 
+    source_input = Instrument.control(
+        ":SOURce:INPut:STATe?", ":SOURce:INPut:STATe %s",
+        """Query the input status of the load. Return “1” if input status is ON. 
+Otherwise, return “0”.
+
+        :type : string
+        """,
+        validator=strict_discrete_set,
+        values=["0", "1", "OFF", "ON"],
+        dynamic=True
+    )
+
     def enable_output(self, enable: bool = True):
         """Enable the channel output.
 
