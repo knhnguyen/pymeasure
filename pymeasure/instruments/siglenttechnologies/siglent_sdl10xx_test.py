@@ -38,31 +38,31 @@ class TestInstrumentCommands(unittest.TestCase):
     # Test for measuring DC voltage
     def test_measure_voltage_dc(self):
         self.siglentObject.wait_until_operations_complete()
-        result = self.siglentObject.measure_voltage_dc()
+        result = self.siglentObject.measure_voltage_dc
         self.assertEqual(result, 0)
 
     # Test for measuring DC current
     def test_measure_current_dc(self):
         self.siglentObject.wait_until_operations_complete()
-        result = self.siglentObject.measure_current_dc()
+        result = self.siglentObject.measure_current_dc
         self.assertEqual(result, 0)
 
     # Test for measuring DC power
     def test_measure_power_dc(self):
         self.siglentObject.wait_until_operations_complete()
-        result = self.siglentObject.measure_power_dc()
+        result = self.siglentObject.measure_power_dc
         self.assertEqual(result, 0)
 
     # Test for measuring DC resistance
     def test_measure_resistance_dc(self):
         self.siglentObject.wait_until_operations_complete()
-        result = self.siglentObject.measure_resistance_dc()
+        result = self.siglentObject.measure_resistance_dc
         self.assertEqual(result, 0)
 
     # Test for measuring external values
     def test_measure_external(self):
         self.siglentObject.wait_until_operations_complete()
-        result = self.siglentObject.measure_external()
+        result = self.siglentObject.measure_external
         self.assertEqual(result, 0)
         # print(self.siglentObject.measure_external(), "test")
         # pass

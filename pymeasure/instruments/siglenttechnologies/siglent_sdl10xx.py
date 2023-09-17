@@ -1,12 +1,9 @@
 from pymeasure.instruments.instrument import Instrument
-import pyvisa
-from pymeasure.instruments.validators import strict_discrete_set, custom_voltage_range_validator
+from pymeasure.instruments.validators import strict_discrete_set, custom_voltage_range_validator, custom_current_range_validator
 from pymeasure.adapters import VISAAdapter
 
 
-rm = pyvisa.ResourceManager()
 ip_addr = "169.254.245.175"
-# instrument = rm.open_resource(f'TCPIP0::{ip_addr}')
 adapter = VISAAdapter('TCPIP0::169.254.245.175::inst0::INSTR')
 
 class SDLbase(Instrument):
@@ -111,8 +108,8 @@ class SDLbase(Instrument):
         Getter: Query the current range of CC mode in static operation.
             Returns: int
         """,
-        validator=custom_voltage_range_validator,
-        values=["MINimum", "MAXimum", "DEFault"] ,
+        validator=custom_current_range_validator,
+        values=["MINimum", "MAXimum", "DEFault"],
         dynamic=True
     )
 
@@ -159,75 +156,83 @@ class SDLbase(Instrument):
         Return: int
         """,
         validator=strict_discrete_set,
-        values=["ON", "OFF", "1",  "0"] ,
+        values=["ON", "OFF", "1",  "0"],
         dynamic=True
 
     )
+    # get_idn = Instrument.measurement(
+    #     "*IDN?",
+    #     """
+    #     Query SDL10xx instrument identification
+    #     Returns:
+    #         str
+    #     """
+    # )
 
     def get_idn(self):
         self.write("*IDN?")
         return self.adapter.read()
-    
-    def measure_voltage_dc(self):
+
+    measure_voltage_dc = Instrument.measurement(
+        "MEASure:VOLTage:DC?",
         """
         Gets the real-time voltage measurement value.
 
         Returns:
             float: The voltage measurement value.
         """
-        self.write("MEASure:VOLTage:DC?")
-        return float(self.adapter.read())
+    )
 
-    def measure_current_dc(self):
+    measure_current_dc = Instrument.measurement(
+        "MEASure:CURRent:DC?",
         """
         Gets the real-time current measurement value.
 
         Returns:
             float: The current measurement value.
         """
-        self.write("MEASure:CURRent:DC?")
-        return float(self.adapter.read())
-    
-        
+    )
 
-    def measure_power_dc(self):
+    measure_power_dc = Instrument.measurement(
+        "MEASure:POWer:DC?",
         """
         Gets the real-time power measurement value.
 
         Returns:
             float: The power measurement value.
         """
-        self.write("MEASure:POWer:DC?")
-        return float(self.adapter.read())
-       
-    def measure_resistance_dc(self):
+    )
+
+    measure_resistance_dc = Instrument.measurement(
+        "MEASure:RESistance:DC?",
         """
         Gets the real-time resistance measurement value.
 
         Returns:
             float: The resistance measurement value.
         """
-        self.write("MEASure:RESistance:DC?")
-        return float(self.adapter.read())
-    
-    def measure_external(self):
+    )
+
+    measure_external = Instrument.measurement(
+        "MEASure:EXT?",
         """
         Gets the real-time external measurement value in external sink mode.
 
         Returns:
             float: The external measurement value.
         """
-        self.write("MEASure:EXT?")
-        return float(self.adapter.read())
-    
+
+    )
+
     def wait_until_operations_complete(self):
         """
         Cause the instrument to wait until all pending commands are completed before executing any additional commands.
         """
         self.write("*WAI")
 
-    
+
 siglentObject = SDLbase(adapter)
+# print(siglentObject.measure_power_dc1)
 
 # print(siglentObject.event_status)
 # siglentObject.event_status = -1
