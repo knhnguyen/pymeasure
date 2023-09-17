@@ -2,13 +2,16 @@
 # from pymeasure.instruments.resources import list_resources
 import pyvisa
 
+from pymeasure.instruments.instrument import Instrument
+
+from pymeasure.instruments.validators import strict_discrete_set
+
 # Initialize a Resource Manager for Visa instruments
 # rm = pyvisa.ResourceManager('@py')
 # ip_addr = "169.254.245.175"
 
 # # # Open a connection to the instrument using TCPIP protocol
 # instrument = rm.open_resource(f'TCPIP0::{ip_addr}')
-
 
 
 class IEEECommonCommands:
@@ -399,8 +402,29 @@ rm = pyvisa.ResourceManager()
 ip_addr = "169.254.245.175"
 instrument = rm.open_resource(f'TCPIP0::{ip_addr}')
 
-# instrument.write("SOURce:FUNCtion CURRent")
-print(instrument.query(":SOURce:FUNCtion?"))
+
+class siglent1020:
+    def __init__(self, instrument):
+        self.instrument = instrument
+
+    source_input = Instrument.control(
+        ":SOURce:INPut:STATe?", ":SOURce:INPut:STATe %s",
+        """Query the input status of the load. Return “1” if input status is ON. 
+        Otherwise, return “0”.
+
+        :type : string
+        """,
+        validator=strict_discrete_set,
+        values=["0", "1", "OFF", "ON"],
+        dynamic=True
+    )
+
+    def test_get(self):
+        return self.source_input
+
+siglentObject = siglent1020(instrument)
+print(siglentObject.source_input())
+# print(siglent1020.source_input.fget(instrument))
 
 # print("Test")
 

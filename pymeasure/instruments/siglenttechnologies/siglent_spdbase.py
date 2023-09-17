@@ -106,6 +106,8 @@ class SPDChannel(Channel):
         dynamic=True
     )
 
+    
+
     voltage_setpoint = Instrument.control(
         "CH{ch}:VOLT?", "CH{ch}:VOLT %g",
         """Control the output voltage configuration of the channel.
