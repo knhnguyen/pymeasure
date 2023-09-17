@@ -36,7 +36,6 @@ pip install pymeasure
 2. Create instances of SDLbase class:
 ```python
   #INITIALIZE CONNTECTION SAMPLE
-  ip_addr = "169.254.245.175"   
   adapter = VISAAdapter('TCPIP0::169.254.245.175::inst0::INSTR')
 
   # Create instances of command classes
