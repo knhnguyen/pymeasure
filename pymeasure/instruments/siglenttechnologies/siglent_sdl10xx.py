@@ -1,5 +1,5 @@
 from pymeasure.instruments.instrument import Instrument
-from pymeasure.instruments.validators import strict_discrete_set, custom_voltage_range_validator, custom_current_range_validator
+from pymeasure.instruments.validators import strict_discrete_set
 
 # SAMPLE CODE USAGE 
 ##########################################################################################
@@ -176,18 +176,6 @@ class SDLbase(Instrument):
         dynamic=True
 
     )
-    # get_idn = Instrument.measurement(
-    #     "*IDN?",
-    #     """
-    #     Query SDL10xx instrument identification
-    #     Returns:
-    #         str
-    #     """
-    # )
-
-    def get_idn(self):
-        self.write("*IDN?")
-        return self.adapter.read()
 
     measure_voltage_dc = Instrument.measurement(
         "MEASure:VOLTage:DC?",
@@ -245,3 +233,13 @@ class SDLbase(Instrument):
         Cause the instrument to wait until all pending commands are completed before executing any additional commands.
         """
         self.write("*WAI")
+    
+    def get_idn(self):
+        """
+        Query SDL1020X-e instrument identification information.
+
+        Returns:
+            str: The instrument identification information.
+        """
+        self.write("*IDN?")
+        return self.adapter.read()

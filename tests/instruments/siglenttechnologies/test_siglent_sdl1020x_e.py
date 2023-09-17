@@ -1,6 +1,4 @@
 import unittest
-# from pymeasure.instruments.instrument import Instrument
-from pymeasure.adapters import VISAAdapter
 from pymeasure.instruments.siglenttechnologies.siglent_sdl10xx import SDLbase
 
 # TEST FILE OF FUNCTIONALTIES FOR SIGLENT_SDL1020.py
