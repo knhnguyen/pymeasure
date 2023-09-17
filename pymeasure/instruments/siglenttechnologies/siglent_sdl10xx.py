@@ -1,10 +1,26 @@
 from pymeasure.instruments.instrument import Instrument
 from pymeasure.instruments.validators import strict_discrete_set, custom_voltage_range_validator, custom_current_range_validator
-from pymeasure.adapters import VISAAdapter
+
+# SAMPLE CODE USAGE 
+##########################################################################################
+#INITIALIZE CONNTECTION
+# ip_addr = "169.254.245.175"   
+# adapter = VISAAdapter('TCPIP0::169.254.245.175::inst0::INSTR')
+
+# CREATE an object with the SDLbase class 
+# siglentObject = SDLbase(adapter)
 
 
-ip_addr = "169.254.245.175"
-adapter = VISAAdapter('TCPIP0::169.254.245.175::inst0::INSTR')
+# SAMPLE COMMANDS
+# SETTING MODE IN STATIC OPERATION
+# siglentObject.mode_static_operation = "CURRent"
+
+# QUERY CURRENT MODE IN STATIC OPERATION.
+# print(siglentObject.mode_static_operation)
+
+# GET REAL TIME VOLTAGE MEASUREMENT 
+# print(siglentObject.measure_voltage_dc)
+##########################################################################################
 
 class SDLbase(Instrument):
     def __init__(self, adapter, name="Siglent SDL10xx instrument Base Class", **kwargs):
@@ -229,32 +245,3 @@ class SDLbase(Instrument):
         Cause the instrument to wait until all pending commands are completed before executing any additional commands.
         """
         self.write("*WAI")
-
-
-siglentObject = SDLbase(adapter)
-# print(siglentObject.measure_power_dc1)
-
-# print(siglentObject.event_status)
-# siglentObject.event_status = -1
-# print(siglentObject.event_status)
-# siglentObject.status_byte_enable = 15
-# print(siglentObject.status_byte_enable)
-# siglentObject.mode_static_operation = "CURRent"
-# print(siglentObject.mode_static_operation)
-
-# siglentObject.current_range_CC_static_operation = "DEFault"
-# print(siglentObject.current_range_CC_static_operation)
-
-# siglentObject.voltage_range_CC_static_operation = "MINimum"
-# print(siglentObject.voltage_range_CC_static_operation)
-
-# siglentObject.voltage_value_CV_static_operation = "MINimum"
-# print(siglentObject.voltage_value_CV_static_operation)
-
-siglentObject.time_measurement_switch = "OFF"
-print(siglentObject.time_measurement_switch)
-# # siglentObject.mode_transient_operation = "CURRent"
-# # print(siglentObject.mode_transient_operation)
-# print(siglentObject.get_idn())
-# # siglentObject.get_input_status()
-# siglentObject.source_input

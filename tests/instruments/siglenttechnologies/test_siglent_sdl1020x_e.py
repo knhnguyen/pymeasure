@@ -1,7 +1,7 @@
 import unittest
-from pymeasure.instruments.instrument import Instrument
+# from pymeasure.instruments.instrument import Instrument
 from pymeasure.adapters import VISAAdapter
-from siglent_sdl10xx import SDLbase
+from pymeasure.instruments.siglenttechnologies.siglent_sdl10xx import SDLbase
 
 # TEST FILE OF FUNCTIONALTIES FOR SIGLENT_SDL1020.py
 # TO RUN TEST EXECUTE "python -m unittest siglent_sdl10xx_test.py"
@@ -14,8 +14,12 @@ class TestInstrumentCommands(unittest.TestCase):
 
         # Open a connection to the instrument using TCPIP protocol
         # Create an instance of the command class (SDLbase)
-        self.adapter = VISAAdapter('TCPIP0::169.254.245.175::inst0::INSTR')
-        self.siglentObject = SDLbase(self.adapter)
+
+        # EXAMPLE
+        # self.adapter = VISAAdapter('TCPIP0::169.254.245.175::inst0::INSTR')
+        # self.siglentObject = SDLbase(self.adapter)
+
+        pass
 
     # Test for the get_idn() method
     def test_get_idn(self):
